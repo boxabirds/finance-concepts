@@ -2,6 +2,7 @@
 # A graphviz acyclic graph representing 
 # money concepts for the UK. 
 # This is an experiment in attempting to model a domain and visualise it.
+# Visualise by copying and pasting at http://mdaines.github.io/viz.js/
 
 graph "UK Money Conceptual Dependencies" {
     fi [label = "Financial institutions"];
