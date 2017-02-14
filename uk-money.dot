@@ -1,0 +1,65 @@
+# http://www.graphviz.org/content/cluster
+# A graphviz acyclic graph representing 
+# money concepts for the UK. 
+# This is an experiment in attempting to model a domain and visualise it.
+
+graph "UK Money Conceptual Dependencies" {
+    fi [label = "Financial institutions"];
+    
+    banks [label ="Banks"];
+    fi -- banks;
+    
+    cu [label="Credit unions"];
+    rol [label="Restrictions on lending" shape=note color=gold fontcolor=goldenrod3]
+    cu -- rol;
+    fi -- cu;
+    
+    kinds [label="Kinds of banks"];
+    kinds -- "Building societies";
+    
+    comb [label="Commercial banks"];
+    kinds -- comb;
+    
+    bank_comment [label="Do not require\nother people's money\nto lend" shape=note color=gold fontcolor=goldenrod3];
+    banks -- bank_comment;
+    banks -- kinds;
+    
+    money [label="All money"];
+    mb [label="Monetary base\n3.6%"]
+    money -- mb;
+
+    comb_m [label="Commercial\nBank Money\n97.4%"];
+    money -- comb_m
+    comb -- comb_m [label="Creates out\nof thin air"];
+
+    mb -- "Actual cash";
+    reserves [label="Reserves"];
+    mb -- reserves;
+    
+    m4 [label="Money supply aka M4"];
+    m4 -- "Cash";
+    m4 -- "Deposits";
+    
+    cenb [label="Central banks"];
+    bofe [label="Bank of England"];
+    kinds -- cenb -- bofe;
+    bofe -- reserves [label="Creates"];
+
+    // what money is electronic?    
+    electronic [label="Electronic"];
+    electronic -- reserves;
+    electronic -- comb_m;
+    
+    qe [label="Quantitative easing"];
+    qe_comment [label="Almost no effect on money supply" shape=note color=gold fontcolor=goldenrod3];
+    qe -- qe_comment;
+    
+    bofe -- qe;
+    
+}
+
+
+
+
+
+
