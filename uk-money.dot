@@ -1,18 +1,21 @@
-# http://www.graphviz.org/content/cluster
-# A graphviz acyclic graph representing 
-# money concepts for the UK. 
-# This is an experiment in attempting to model a domain and visualise it.
-# Visualise by copying and pasting at http://mdaines.github.io/viz.js/
-
 graph "UK Money Conceptual Dependencies" {
+    # Any comments are stylised here. 
+    node [shape=note color=gold fontcolor=goldenrod3]; 
+    bank_comment qe_comment cu_comment;
+    comb_comment;
+    
+    # nodes for electronic money
+    
+    # Node styles for rest of graph
+    node [shape=default color=black fontcolor=black];
     fi [label = "Financial institutions"];
     
     banks [label ="Banks"];
     fi -- banks;
     
     cu [label="Credit unions"];
-    rol [label="Restrictions on lending" shape=note color=gold fontcolor=goldenrod3]
-    cu -- rol;
+    cu_comment [label="Restrictions on lending"]
+    cu -- cu_comment;
     fi -- cu;
     
     kinds [label="Kinds of banks"];
@@ -21,7 +24,10 @@ graph "UK Money Conceptual Dependencies" {
     comb [label="Commercial banks"];
     kinds -- comb;
     
-    bank_comment [label="Do not require\nother people's money\nto lend" shape=note color=gold fontcolor=goldenrod3];
+    comb_comment [label="Must have enough assets\nfor day to day running"];
+    comb -- comb_comment;
+    
+    bank_comment [label="Do not require\nother people's money\nto lend"];
     banks -- bank_comment;
     banks -- kinds;
     
@@ -29,17 +35,18 @@ graph "UK Money Conceptual Dependencies" {
     mb [label="Monetary base\n3.6%"]
     money -- mb;
 
-    comb_m [label="Commercial\nBank Money\n97.4%"];
-    money -- comb_m
-    comb -- comb_m [label="Creates out\nof thin air"];
+    deposits [label="Commercial\nBank Money\n97.4%"];
+    money -- deposits
+    comb -- deposits [label="Creates out\nof thin air"];
 
-    mb -- "Actual cash";
+    cash [label="Physical cash"];
+    mb -- cash;
     reserves [label="Reserves"];
     mb -- reserves;
     
     m4 [label="Money supply aka M4"];
-    m4 -- "Cash";
-    m4 -- "Deposits";
+    m4 -- cash;
+    m4 -- deposits;
     
     cenb [label="Central banks"];
     bofe [label="Bank of England"];
@@ -49,18 +56,15 @@ graph "UK Money Conceptual Dependencies" {
     // what money is electronic?    
     electronic [label="Electronic"];
     electronic -- reserves;
-    electronic -- comb_m;
+    electronic -- deposits;
     
     qe [label="Quantitative easing"];
-    qe_comment [label="Almost no effect on money supply" shape=note color=gold fontcolor=goldenrod3];
+    qe_comment [label="Almost no effect on money supply"];
     qe -- qe_comment;
     
     bofe -- qe;
     
+    bofe -- comb [label="Lender of\nlast resort"];
+
+    
 }
-
-
-
-
-
-
